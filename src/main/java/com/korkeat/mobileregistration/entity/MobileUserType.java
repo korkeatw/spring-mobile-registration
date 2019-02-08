@@ -1,7 +1,7 @@
 package com.korkeat.mobileregistration.entity;
 
-public enum MemberType {
-    PLATINUM,
-    GOLD,
+public enum MobileUserType {
     SILVER,
+    GOLD,
+    PLATINUM,
 }

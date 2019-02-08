@@ -3,7 +3,6 @@ package com.korkeat.mobileregistration.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.korkeat.mobileregistration.exception.ConstraintViolationException;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -20,12 +19,12 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name="users",
+@Table(name="mobile_users",
        indexes = {@Index(name="ref_code_index", columnList = "ref_code")}
       )
 @NoArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class User {
+public class MobileUser {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
@@ -45,7 +44,7 @@ public class User {
 
     @Column(name="member_type")
     @JsonProperty("member_type")
-    private MemberType memberType;
+    private MobileUserType mobileUserType;
 
     @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
@@ -58,22 +57,26 @@ public class User {
     private Date updatedAt;
 
     @ConstructorProperties({"phoneNumber", "salary"})
-    public User(String phoneNumber, long salary) throws Exception {
+    public MobileUser(String phoneNumber, long salary) throws Exception {
         this.phoneNumber = normalizePhoneNumber(phoneNumber);
         this.salary = salary;
         this.refCode = createRefCode(phoneNumber);
-        this.memberType = getMemberTypeBySalary(salary);
+        this.mobileUserType = getMemberTypeBySalary(salary);
     }
 
-    private MemberType getMemberTypeBySalary(long salary) throws Exception {
-        if(salary > 50000) {
-            return MemberType.PLATINUM;
-        } else if(salary >= 30000 && salary <= 50000) {
-            return MemberType.GOLD;
-        } else if(salary >= 15000 && salary < 30000) {
-            return MemberType.SILVER;
+    private MobileUserType getMemberTypeBySalary(long salary) throws Exception {
+        if(isOverOrEqual(salary, 50000)) {
+            return MobileUserType.PLATINUM;
+        } else if (isOverOrEqual(salary, 30000)) {
+            return MobileUserType.GOLD;
+        } else if(isOverOrEqual(salary, 15000)) {
+            return MobileUserType.SILVER;
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Salary under minimum requirement");
+    }
+
+    private boolean isOverOrEqual(long num, long min) {
+        return num >= min;
     }
 
     private String createRefCode(String phoneNumber) {
