@@ -18,14 +18,14 @@ public class JwtTokenConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .addFilterBefore(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                    .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                    .anyRequest().authenticated()
-                .and()
-                .csrf().disable()
-                .httpBasic().disable();
+            .addFilterBefore(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                .anyRequest().authenticated()
+            .and()
+            .csrf().disable()
+            .httpBasic().disable();
     }
 }

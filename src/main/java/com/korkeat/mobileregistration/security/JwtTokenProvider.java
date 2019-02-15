@@ -3,7 +3,6 @@ package com.korkeat.mobileregistration.security;
 import com.korkeat.mobileregistration.entity.LoginUser;
 import com.korkeat.mobileregistration.repository.LoginUserRepository;
 import io.jsonwebtoken.*;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,11 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Component
-@Slf4j
 public class JwtTokenProvider {
     @Value("${security.jwt.token.secret-key:THIS_IS_SECRET}")
     private String secretKey;
 
+    // Default is 1hr
     @Value("${security.jwt.token.expiration-millisecs:3600000}")
     private long expirationMilliseconds;
 
@@ -45,7 +44,7 @@ public class JwtTokenProvider {
         String bearerToken = req.getHeader("Authorization");
         String authPrefix = "Bearer ";
         if (bearerToken == null || !bearerToken.startsWith(authPrefix)) {
-            return null;
+            throw new JwtException("Missing authentication token");
         }
         return StringUtils.substringAfter(bearerToken, authPrefix);
     }
@@ -54,22 +53,18 @@ public class JwtTokenProvider {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
     }
 
-    public boolean validateToken(String token) {
+    public void validateToken(String token) {
         Jws<Claims> claims = null;
 
         try {
             claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
         } catch(JwtException | IllegalArgumentException err) {
-            log.error("Malformed token");
-            return false;
+            throw new JwtException("Malformed token");
         }
 
         if (claims.getBody().getExpiration().before(new Date())) {
-            log.error("Token expired");
-            return  false;
+            throw new JwtException("Token expired");
         }
-
-        return true;
     }
 
     public String resolveUsernameFromToken(String token) {
