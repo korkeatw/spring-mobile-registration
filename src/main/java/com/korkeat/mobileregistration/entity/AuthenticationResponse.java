@@ -12,5 +12,6 @@ import java.util.Date;
 public class AuthenticationResponse {
     private String username;
     private String token;
-    private Date expiration;
+    private Date issuedAt;
+    private Date expiredAt;
 }

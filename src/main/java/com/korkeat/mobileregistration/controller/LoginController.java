@@ -43,7 +43,8 @@ public class LoginController {
             Claims claims = jwtTokenProvider.getClaims(token);
             authRes.setUsername(foundUser.getUsername());
             authRes.setToken(token);
-            authRes.setExpiration(claims.getExpiration());
+            authRes.setIssuedAt(claims.getIssuedAt());
+            authRes.setExpiredAt(claims.getExpiration());
             return authRes;
         } catch(Exception err) {
             log.debug(err.getMessage());
