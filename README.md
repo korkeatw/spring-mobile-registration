@@ -24,3 +24,22 @@ cd spring-mobile-registration
 ```
 
 The server will run on `localhost:8080`
+
+
+## Running the unit test
+
+Run all tests
+
+```bash
+mvn test
+```
+
+Specify the pattern of test file
+
+```bash
+mvn -D*UnitTest test
+
+# or
+
+mvn -D*IntegrationTest test
+```
