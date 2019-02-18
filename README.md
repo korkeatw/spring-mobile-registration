@@ -59,7 +59,7 @@ curl -XGET \
 ```
 
 
-## Running the unit test
+## Running the test
 
 Run all tests
 
@@ -70,9 +70,11 @@ mvn test
 Specify the pattern of test file
 
 ```bash
-mvn -D*UnitTest test
+mvn -Dtest=*UnitTest test
 
 # or
 
-mvn -D*IntegrationTest test
+mvn -Dtest=*IntegrationTest test
 ```
+
+**Note: For integration test, it requires external resource such as database**
