@@ -17,11 +17,11 @@ import javax.validation.Valid;
 
 @RestController
 @Slf4j
-public class LoginController {
+public class AuthController {
     private final LoginUserRepository loginUserRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public LoginController(LoginUserRepository loginUserRepository, JwtTokenProvider jwtTokenProvider) {
+    public AuthController(LoginUserRepository loginUserRepository, JwtTokenProvider jwtTokenProvider) {
         this.loginUserRepository = loginUserRepository;
         this.jwtTokenProvider = jwtTokenProvider;
     }
