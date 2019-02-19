@@ -30,7 +30,7 @@ public class MobileUserRepositoryIntegrationTest {
         repository.save(user);
 
         List<MobileUser> users = repository.findAllByRefCode("201902193333");
-        repository.deleteAll();
+
         assertThat(users).isEmpty();
     }
 
@@ -52,7 +52,7 @@ public class MobileUserRepositoryIntegrationTest {
         repository.save(user2);
 
         List<MobileUser> users = repository.findAllByRefCode(refCode);
-        repository.deleteAll();
+
         assertThat(users).isNotEmpty();
         assertThat(users.size()).isEqualTo(2);
     }
