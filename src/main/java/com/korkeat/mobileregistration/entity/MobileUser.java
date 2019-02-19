@@ -19,9 +19,13 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name="mobile_users",
-       indexes = {@Index(name="ref_code_index", columnList = "ref_code")}
-      )
+@Table(
+        name="mobile_users",
+        indexes = {
+            @Index(name="ref_code_index", columnList = "ref_code", unique = false),
+            @Index(name="phone_number_index", columnList = "phone_number", unique = true)
+        }
+)
 @NoArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class MobileUser {
