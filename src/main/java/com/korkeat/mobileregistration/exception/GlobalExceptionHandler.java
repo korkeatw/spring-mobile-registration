@@ -15,21 +15,21 @@ import java.sql.SQLIntegrityConstraintViolationException;
 public class GlobalExceptionHandler {
     @ResponseStatus(value=HttpStatus.NOT_FOUND, reason="Resource not found")
     @ExceptionHandler({HttpMessageNotWritableException.class})
-    public void handle(HttpMessageNotWritableException ex) {}
+    public void handle(HttpMessageNotWritableException err) {}
 
     @ResponseStatus(value=HttpStatus.NOT_FOUND, reason="Resource not found")
     @ExceptionHandler({EntityNotFoundException.class})
-    public void handle(EntityNotFoundException ex) {}
+    public void handle(EntityNotFoundException err) {}
 
     @ResponseStatus(value=HttpStatus.CONFLICT, reason="Resource already exists")
     @ExceptionHandler({SQLIntegrityConstraintViolationException.class})
-    public void handle(SQLIntegrityConstraintViolationException ex) {}
+    public void handle(SQLIntegrityConstraintViolationException err) {}
 
     @ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Invalid input")
     @ExceptionHandler({MethodArgumentTypeMismatchException.class})
-    public void handle(MethodArgumentTypeMismatchException ex) {}
+    public void handle(MethodArgumentTypeMismatchException err) {}
 
     @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR, reason="Server error")
     @ExceptionHandler({NullPointerException.class, SQLException.class})
-    public void handle(Exception ex) {}
+    public void handle(Exception err) {}
 }
