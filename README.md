@@ -2,7 +2,7 @@
 
 The sample REST service using Spring
 
-## Requirement software/lib
+## Required software/lib
 
 - Java 1.8+
 - Maven
@@ -26,7 +26,7 @@ cd spring-mobile-registration
 The server will run on `localhost:8080`
 
 
-## Test the API
+## Testing the API
 
 First you need to login to get the access token
 
@@ -77,4 +77,4 @@ mvn -Dtest=*UnitTest test
 mvn -Dtest=*IntegrationTest test
 ```
 
-**Note: For integration test, it requires external resource such as database**
+**Note: For integration test, it requires external resource such as database. You have to start PostgreSQL before run the test**
